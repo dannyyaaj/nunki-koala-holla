@@ -3,25 +3,35 @@ const app = express();
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 5000;
 
-// Configure body-parser for Angular and jQuery
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json()); // This line is required for Angular
+// imported koalaRouter
+const koalaRouter = require('./routes/koala.route');
 
-// Routes
-// Should these be in a router?
+const mongoose = require('mongoose');
 
-// POST
-app.post('/koala', (req, res) => {
-  console.log('POST to /koala req.body =', req.body);
+const db = `mongodb://localhost:27017/koalahollaapp`;
+
+const Koala = require('./models/koala.schema');
+
+mongoose.connect(db);
+
+mongoose.connection.on('connected', () => {
+  console.log('connected to mongodb');
 });
 
-// GET
-app.get('/koala', (req, res) => {
-  // Temporary mock data. Replace this with mongoose.
-  const mockData = [{ _id: 1, name: 'Mock 1', gender: 'F', age: 5, ready_to_transfer: true, notes: 'n/a' },
-                    { _id: 2, name: 'Mock 2', gender: 'M', age: 5, ready_to_transfer: false, notes: 'n/a' }]
-  res.send(mockData);
-})
+
+mongoose.connection.on('error', (err) => {
+  console.log(err);
+});
+
+// Configure body-parser for Angular and jQuery
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json()); // This line is required for Angular
+
+
+// use koala route
+app.use('/koala', koalaRouter);
 
 // Static files
 app.use(express.static('server/public'));
