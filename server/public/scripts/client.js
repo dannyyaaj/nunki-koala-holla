@@ -45,7 +45,7 @@ app.controller('KoalaController', ['$http', function ($http) {
       })
       .then((willDelete) => {
         if (willDelete) {
-          swal(`Poof! ${koala.name} is dead!`, {
+          swal(`Poof! ${koala.name} has been released to the wild!`, {
             icon: "success",
           });
           $http({
