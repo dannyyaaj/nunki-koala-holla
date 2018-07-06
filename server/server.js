@@ -8,7 +8,7 @@ const koalaRouter = require('./routes/koala.route');
 
 const mongoose = require('mongoose');
 
-const db = `mongodb://localhost:27017/koalahollaapp`;
+const db = `mongodb://localhost:27017/koalaholla`;
 
 const Koala = require('./models/koala.schema');
 
